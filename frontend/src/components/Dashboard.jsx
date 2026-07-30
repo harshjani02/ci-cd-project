@@ -1,3 +1,4 @@
+import API_URL from "../config/api";
 import React, { useState, useContext, useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Plus, ListChecks, CheckCircle2, Circle, TrendingUp, Lock } from "lucide-react";
@@ -20,7 +21,7 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const url = "https://task-manager-backend-srzi.onrender.com";
+  const url = API_URL;
 
   useEffect(() => {
     if (isGuest) {

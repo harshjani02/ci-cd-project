@@ -1,3 +1,4 @@
+import API_URL from "../config/api";
 import React, { useContext, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -14,7 +15,7 @@ const EditTask = ({ setOpen, taskToEdit }) => {
   const [dueDate, setDueDate] = useState("");
   const [completed, setCompleted] = useState(false);
   const textareaRef = useRef(null);
-  const url = "https://task-manager-backend-srzi.onrender.com";
+  const url = API_URL;
 
   if (!taskToEdit) return null;
 

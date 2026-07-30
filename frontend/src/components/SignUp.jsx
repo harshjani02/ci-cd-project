@@ -1,3 +1,4 @@
+import API_URL from "../config/api";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -10,7 +11,7 @@ const inputCls =
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const url = "https://task-manager-backend-srzi.onrender.com";
+  const url = API_URL;
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
 
   const handleSignUp = async (data) => {

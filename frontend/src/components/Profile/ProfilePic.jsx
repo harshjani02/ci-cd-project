@@ -1,3 +1,4 @@
+import API_URL from "../../config/api";
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { taskContext } from "../../App";
 import { X } from "lucide-react";
@@ -12,7 +13,7 @@ const ProfilePic = () => {
   const [file, setFile] = useState(null);
 
   // Server url (Backend)
-  const url = "https://task-manager-backend-srzi.onrender.com";
+  const url = API_URL;
 
   const fileInputRef = useRef(null);
 

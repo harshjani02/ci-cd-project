@@ -1,3 +1,4 @@
+import API_URL from "../config/api";
 import React, { useContext } from "react";
 import { SquarePen, Trash2, Calendar, Lock, Pin } from "lucide-react";
 import { taskContext } from "../App";
@@ -16,7 +17,7 @@ const statusConfig = {
   pending:   "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
 };
 
-const url = "https://task-manager-backend-srzi.onrender.com";
+const url = API_URL;
 
 const TaskCard = ({ task }) => {
   const {

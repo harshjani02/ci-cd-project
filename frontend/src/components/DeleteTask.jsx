@@ -1,3 +1,4 @@
+import API_URL from "../config/api";
 import React, { useContext } from "react";
 import { taskContext } from "../App";
 import { toast } from "react-toastify";
@@ -6,7 +7,7 @@ import { Trash2 } from "lucide-react";
 
 const DeleteTask = () => {
   const { setTasks, setPendingTasks, setCompletedTasks, confirmDelete, setConfirmDelete, taskToDelete, setTaskToDelete } = useContext(taskContext);
-  const url = "https://task-manager-backend-srzi.onrender.com";
+  const url = API_URL;
 
   const handleDelete = async () => {
     const token = localStorage.getItem("token");

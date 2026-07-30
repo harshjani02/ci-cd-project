@@ -1,3 +1,4 @@
+import API_URL from "../config/api";
 import React, { useContext, useState, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -15,7 +16,7 @@ const AddTask = ({ setOpen }) => {
   const [completed, setCompleted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const textareaRef = useRef(null);
-  const url = "https://task-manager-backend-srzi.onrender.com";
+  const url = API_URL;
 
   // Manually insert \n at cursor position so Radix Dialog cannot intercept Enter
   const handleDescriptionKeyDown = (e) => {
