@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: backend
+  namespace: task-manager
+  labels:
+    app: backend  # it shows the label when you cmd kubectl get pods -n task-manager --show-labels
+
+spec:
+  replicas: 2
+
+  strategy:   # tells how to update pods.
+    type: RollingUpdate  # means dont stop all pods at once.
+    rollingUpdate:
+      maxUnavailable: 1  # maximum unavailable pod during the updating. 
+      maxSurge: 1  # k8s can temporarily create 1 extea pod.
+
+  selector: # Deployment needs to know which Pods belong to it.
+    matchLabels:
+      app: backend  # Only these Pods are managed.
+
+  template:  # Whenever Kubernetes creates a new Pod, it copies everything under template.
+    metadata:
+      labels:
+        app: backend
+
+    spec:
+      containers:
+        - name: backend
+          image: ci-cdproject-backend:latest
+          imagePullPolicy: IfNotPresent  #tells if image already exists on node use it else download it. other option like Always and Never 
+
+          ports:
+            - containerPort: 4000
+
+          envFrom:
+            - configMapRef:
+                name: backend-config
+
+            - secretRef:
+                name: backend-secret
+
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          livenessProbe: # Checks if application is alive.
+            tcpSocket: # Checks whether TCP port 4000 is accepting connections.
+              port: 4000
+            initialDelaySeconds: 30 # wait until 30 sec after container starts before checking 
+            periodSeconds: 10  # run check every 10 second 
+
+          readinessProbe: #Checks if application is ready to receive traffic.
+            tcpSocket:  # Checks whether port 4000 is accepting connections.
+              port: 4000
+            initialDelaySeconds: 10 # Wait 10 seconds before the first readiness check.
+            periodSeconds: 5 # check every 5 second 
+
+#  Liveness probe → "Is the app still alive?"
+#  Readiness probe → "Is the app ready to serve requests?"
