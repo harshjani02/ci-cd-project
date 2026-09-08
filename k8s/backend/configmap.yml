@@ -7,4 +7,4 @@ metadata:
 
 data:
   PORT: "4000"
-  DATABASE_URL: "mongodb://mongodb-service:27017/taskmanager"
+  
