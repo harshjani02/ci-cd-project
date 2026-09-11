@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 4000;
 // middleware 
 const allowedOrigins = [
   "http://localhost:5173",
+  "http://localhost:3000",
   "https://task-manager-rfo2.onrender.com"
 ];
 
