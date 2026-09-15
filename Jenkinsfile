@@ -38,6 +38,22 @@ pipeline {
             }
         }
 
+        stage('Frontend Lint') {
+            steps {
+                dir('frontend') {
+                    sh 'npm run lint'
+                }
+            }
+        }
+
+        stage('Frontend Build') {
+            steps {
+                dir('frontend') {
+                    sh 'npm run build'
+                }
+            }
+        }
+
         stage('Verify Project') {
             steps {
                 sh 'pwd'
