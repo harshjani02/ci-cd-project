@@ -57,7 +57,7 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 sh 'docker build -t task-manager-backend:ci ./backend'
-                sg 'docker build -t task-manager-frontend:ci ./frontend'
+                sh 'docker build -t task-manager-frontend:ci ./frontend'
             }
         }
 
