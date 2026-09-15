@@ -54,6 +54,13 @@ pipeline {
             }
         }
 
+        stage('Build Docker Images') {
+            steps {
+                sh 'docker built -t task-manager-backend:ci ./backend'
+                sg 'docker built -t task-manager-frontend:ci ./frontend'
+            }
+        }
+
         stage('Verify Project') {
             steps {
                 sh 'pwd'
