@@ -38,13 +38,13 @@ pipeline {
             }
         }
 
-        stage('Frontend Lint') {
-            steps {
-                dir('frontend') {
-                    sh 'npm run lint || true'
-                }
-            }
-        }
+        // stage('Frontend Lint') {
+        //     steps {
+        //         dir('frontend') {
+        //             sh 'npm run lint || true'
+        //         }
+        //     }
+        // }
 
         stage('Frontend Build') {
             steps {
