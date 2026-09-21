@@ -13,6 +13,22 @@ pipeline {
             }
         }
 
+        stage('Test AWS Authentication') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'aws-ecr-credentials'
+                        usernameVariable: 'AWS_ACCESS_KEY_ID'
+                        usernameVariable: 'AWS_SECRET_ACCESS_KEY'
+                    )
+                ]) {
+                    sh '''
+                        aws sts get-caller-identity
+                    '''
+                }
+            }
+        }
+
         stage('Install Dependencies') {
             parallel {
 
