@@ -61,6 +61,18 @@ pipeline {
             }
         }
 
+        stage('Tag Images for ECR') {
+            steps {
+                sh '''
+                    docker tag task-manager-backend:ci \
+                    881174216441.dkr.ecr.ap-south-1.amazonaws.com/task-manager-backend:v1
+
+                    docker tag task-manager-frontend:ci \
+                    881174216441.dkr.ecr.ap-south-1.amazonaws.com/task-manager-frontend:v1
+                '''
+            }
+        }   
+
         stage('Login to ECR') {
             steps {
                 withCredentials([
