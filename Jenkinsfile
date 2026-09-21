@@ -13,6 +13,12 @@ pipeline {
             }
         }
 
+        stage('Get Git Commit') {
+            steps {
+                sh 'git rev-parse --short HEAD'
+            }
+        }
+
         stage('Install Dependencies') {
             parallel {
 
