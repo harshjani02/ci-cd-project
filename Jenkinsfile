@@ -13,11 +13,18 @@ pipeline {
             }
         }
 
-        stage('Get Git Commit') {
+        stage('Set Image Tag') {
             steps {
-                sh 'git rev-parse --short HEAD'
-            }
+                script {
+                    env.IMAGE_TAG = sh(
+                    script: 'git rev-parse --short HEAD',
+                    returnStdout: true
+            ).trim()
+
+            echo "IMAGE_TAG = ${env.IMAGE_TAG}"
         }
+    }
+}
 
         stage('Install Dependencies') {
             parallel {
