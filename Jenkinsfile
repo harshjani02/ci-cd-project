@@ -13,22 +13,6 @@ pipeline {
             }
         }
 
-        stage('Test AWS Authentication') {
-            steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: 'aws-ecr-credentials',
-                        usernameVariable: 'AWS_ACCESS_KEY_ID',
-                        passwordVariable: 'AWS_SECRET_ACCESS_KEY'
-                    )
-                ]) {
-                    sh '''
-                        aws sts get-caller-identity
-                    '''
-                }
-            }
-        }
-
         stage('Install Dependencies') {
             parallel {
 
@@ -76,6 +60,24 @@ pipeline {
                 sh 'docker build -t task-manager-frontend:ci ./frontend'
             }
         }
+
+        stage('Login to ECR') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'aws-ecr-credentials',
+                        usernameVariable: 'AWS_ACCESS_KEY_ID',
+                        passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                    )
+                ]) {
+                    sh '''
+                        aws ecr get-login-password --region ap-south-1 | \
+                        docker login --username AWS --password-stdin \
+                        881174216441.dkr.ecr.ap-south-1.amazonaws.com
+                    '''
+                }
+            }
+        }        
 
         stage('Verify Project') {
             steps {
