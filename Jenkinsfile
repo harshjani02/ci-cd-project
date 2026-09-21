@@ -78,10 +78,10 @@ pipeline {
             steps {
                 sh '''
                     docker tag task-manager-backend:ci \
-                    881174216441.dkr.ecr.ap-south-1.amazonaws.com/task-manager-backend:v1
+                    881174216441.dkr.ecr.ap-south-1.amazonaws.com/task-manager-backend:{IMAGE_TAG}
 
                     docker tag task-manager-frontend:ci \
-                    881174216441.dkr.ecr.ap-south-1.amazonaws.com/task-manager-frontend:v1
+                    881174216441.dkr.ecr.ap-south-1.amazonaws.com/task-manager-frontend:{IMAGE_TAG}
                 '''
             }
         }   
