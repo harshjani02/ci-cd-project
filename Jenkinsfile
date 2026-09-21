@@ -19,7 +19,7 @@ pipeline {
                     usernamePassword(
                         credentialsId: 'aws-ecr-credentials'
                         usernameVariable: 'AWS_ACCESS_KEY_ID'
-                        usernameVariable: 'AWS_SECRET_ACCESS_KEY'
+                        passwordVariable: 'AWS_SECRET_ACCESS_KEY'
                     )
                 ]) {
                     sh '''
