@@ -89,6 +89,17 @@ pipeline {
                     '''
                 }
             }
+        }
+
+        stage('Push Image to ECR'){
+            steps {
+                sh '''
+                    docker push 881174216441.dkr.ecr.ap-south-1.amazonaws.com/task-manager-backend:v1
+                    docker push 881174216441.dkr.ecr.ap-south-1.amazonaws.com/task-manager-frontend:v1
+
+
+                '''
+            }
         }        
 
         stage('Verify Project') {
