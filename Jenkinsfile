@@ -144,15 +144,23 @@ pipeline {
 
         stage('Verify EKS Deployment') {
             steps {
-                sh '''
-                    kubectl rollout status deployment/backend \
-                        -n task-manager \
-                        --timeout=180s
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'aws-ecr-credentials',
+                        usernameVariable: 'AWS_ACCESS_KEY_ID',
+                        passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                    )
+                ]) {
+                    sh '''
+                        kubectl rollout status deployment/backend \
+                            -n task-manager \
+                            --timeout=180s
 
-                    kubectl rollout status deployment/frontend \
-                        -n task-manager \
-                        --timeout=180s
-                '''
+                        kubectl rollout status deployment/frontend \
+                            -n task-manager \
+                            --timeout=180s
+                    '''
+                }
             }
         }
 
