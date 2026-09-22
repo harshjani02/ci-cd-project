@@ -113,7 +113,48 @@ pipeline {
 
                 '''
             }
+
         }        
+
+        stage('Deploy to EKS') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'aws-ecr-credentials',
+                        usernameVariable: 'AWS_ACCESS_KEY_ID',
+                        passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                    )
+                ]) {
+                    sh '''
+                        aws eks update-kubeconfig \
+                            --region ap-south-1 \
+                            --name task-manager-cluster
+
+                        kubectl set image deployment/backend \
+                            backend=881174216441.dkr.ecr.ap-south-1.amazonaws.com/task-manager-backend:${IMAGE_TAG} \
+                            -n task-manager
+
+                        kubectl set image deployment/frontend \
+                            frontend=881174216441.dkr.ecr.ap-south-1.amazonaws.com/task-manager-frontend:${IMAGE_TAG} \
+                            -n task-manager
+                    '''
+                }
+            }
+        }
+
+        stage('Verify EKS Deployment') {
+            steps {
+                sh '''
+                    kubectl rollout status deployment/backend \
+                        -n task-manager \
+                        --timeout=180s
+
+                    kubectl rollout status deployment/frontend \
+                        -n task-manager \
+                        --timeout=180s
+                '''
+            }
+        }
 
         stage('Verify Project') {
             steps {
